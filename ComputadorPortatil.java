@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 public class ComputadorPortatil {
 
     String serial;
@@ -17,15 +19,19 @@ public class ComputadorPortatil {
         this.procesador = procesador;
     }
 
-    public void PrestarEquipo() {
+    public static LinkedList<EstudianteIngenieria> PrestarEquipo(LinkedList<EstudianteIngenieria> lista) {
+
+        for (EstudianteIngenieria estudianteIngenieria : lista) {
+
+        }
+        return lista;
+    }
+
+    public static void ModificarPrestamo() {
 
     }
 
-    public void ModificarPrestamo() {
-
-    }
-
-    public void BuscarEquipo() {
+    public static void BuscarEquipo() {
 
     }
 

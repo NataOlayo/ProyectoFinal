@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 import javax.swing.JOptionPane;
 
 public class menu {
@@ -15,42 +17,9 @@ public class menu {
             num = Integer.parseInt(jp.showInputDialog(menu));
             switch (num) {
                 case 1:
-                    Datos(num);
-                    break;
-                case 2:
-                    break;
-                case 0:
-                    jp.showMessageDialog(null, "Hasta pronto.");
-                    break;
-                default:
-                    jp.showMessageDialog(null, "Seleccionaste una opción incorrecta, por favor intenta de nuevo.");
-                    break;
-            }
-        } while (num != 0);
-
-    }
-
-    public void Datos(int n) {
-        int num = 0;
-        do {
-            String menu = "\n1. Añadir estudiante"
-                    + "\n2. Pasar al siguiente menú"
-                    + "\n\nDigite la opción deseada:";
-            num = Integer.parseInt(jp.showInputDialog(menu));
-            switch (num) {
-                case 1:
-                    String cedula = jp.showInputDialog("Ingrese la cédula:\n");
-                    String nombre = jp.showInputDialog("Ingrese su nombre:\n");
-                    String apellido = jp.showInputDialog("Ingrese su apellido:\n");
-                    String telefono = jp.showInputDialog("Ingrese su teléfono:\n");
-                    int semestre = Integer.parseInt(jp.showInputDialog("Ingrese el semestre que está cursando:\n"));
-                    float promedio = Float.parseFloat(jp.showInputDialog("Ingrese el promedio acumulado:\n"));
-                    String serial = jp.showInputDialog(
-                            "Ingrese el serial de su equipo. (En caso de no tener ingrese un cero(0))");
-
-                    break;
-                case 2:
                     menuEstudiantes();
+                    break;
+                case 2:
                     break;
                 case 0:
                     jp.showMessageDialog(null, "Hasta pronto.");
@@ -76,12 +45,47 @@ public class menu {
             num = Integer.parseInt(jp.showInputDialog(menu));
             switch (num) {
                 case 1:
-                    menuEstudiantesIngenieria();
+                    PedirDatos(num);
                     break;
                 case 2:
-                    menuEstudiantesDiseno();
+                    PedirDatos(num);
                     break;
                 case 3:
+                    break;
+                case 0:
+                    jp.showMessageDialog(null, "Hasta pronto.");
+
+                    break;
+                default:
+                    jp.showMessageDialog(null, "Seleccionaste una opción incorrecta, por favor intenta de nuevo.");
+                    break;
+            }
+        } while (num != 0);
+
+    }
+
+    public void PedirDatos(int n) {
+        int num = 0;
+        do {
+            String menu = "\n1. Añadir estudiante"
+                    + "\n2. Pasar al siguiente menú"
+                    + "\n\nDigite la opción deseada:";
+            num = Integer.parseInt(jp.showInputDialog(menu));
+            switch (num) {
+                case 1:
+                    if (n == 1) {
+                        EstudianteIngenieria.DatosIng();
+
+                    } else {
+                        EstudianteDiseno.DatosDis();
+                    }
+                    break;
+                case 2:
+                    if (n == 1) {
+                        menuEstudiantesIngenieria();
+                    } else {
+                        menuEstudiantesDiseno();
+                    }
                     break;
                 case 0:
                     jp.showMessageDialog(null, "Hasta pronto.");
@@ -91,7 +95,6 @@ public class menu {
                     break;
             }
         } while (num != 0);
-
     }
 
     public void menuEstudiantesIngenieria() {
@@ -106,6 +109,7 @@ public class menu {
             num = Integer.parseInt(jp.showInputDialog(menu));
             switch (num) {
                 case 1:
+                    ComputadorPortatil.PrestarEquipo(EstudianteIngenieria.getLista());
                     break;
                 case 2:
                     break;
@@ -144,6 +148,7 @@ public class menu {
                     break;
                 case 5:
                     jp.showMessageDialog(null, "Volviendo al menú principal...");
+                    menuEstudiantes();
                     break;
                 default:
                     jp.showMessageDialog(null, "Seleccionaste una opción incorrecta, por favor intenta de nuevo.");

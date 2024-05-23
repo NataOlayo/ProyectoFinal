@@ -11,6 +11,7 @@ public class EstudianteIngenieria {
     int numeroSemestre;
     float promedioAcumulado;
     String serial;
+    static JOptionPane jp = new JOptionPane();
     static LinkedList<EstudianteIngenieria> lista = new LinkedList<>();
 
     public EstudianteIngenieria(String cedula, String nombre, String apellido, String telefono, int numeroSemestre,
@@ -25,17 +26,23 @@ public class EstudianteIngenieria {
     }
 
     public static void DatosIng() {
-        JOptionPane jp = new JOptionPane();
         String cedula = jp.showInputDialog("Ingrese la cédula:\n");
         String nombre = jp.showInputDialog("Ingrese su nombre:\n");
         String apellido = jp.showInputDialog("Ingrese su apellido:\n");
         String telefono = jp.showInputDialog("Ingrese su teléfono:\n");
-        int semestre = Integer.parseInt(jp.showInputDialog("Ingrese el semestre que está cursando:\n"));
+        int semestre = validacion.ValidarNumeroSemestre();
         float promedio = Float.parseFloat(jp.showInputDialog("Ingrese el promedio acumulado:\n"));
         String serial = jp.showInputDialog("Ingrese el serial de su equipo. (En caso de no tener ingrese un cero(0))");
         EstudianteIngenieria estudiante = new EstudianteIngenieria(cedula, nombre, apellido, telefono, semestre,
                 promedio, serial);
-        lista.add(estudiante);
+        if (validacion.ValidarDatosEstudianteIngeniera(estudiante)) {
+            lista.add(estudiante);
+        }
+
+    }
+
+    public static void recibirLista(LinkedList<EstudianteIngenieria> listaa) {
+        lista = listaa;
     }
 
     public String getCedula() {

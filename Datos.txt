@@ -1,0 +1,33 @@
+Estudiante de Ingenieria
+  Cedula: 123456789
+  Nombre: Ana
+  Apellido: Pérez
+  Teléfono: +1 234 567 890
+  Semestre: 4
+  Promedio: 4.5
+  Serial: EING001
+
+Estudiante de Diseño
+  Cédula: 987654321
+  Nombre: Carlos
+  Apellido: Rodríguez
+  Teléfono: +1 987 654 321
+  Modalidad de estudio: Presencial
+  Cantidad de asignaturas: 6
+  Serial: EDIS002
+
+Computador Portatil
+  Serial: EING001
+  Marca: Dell
+  Tamaño: 15.6
+  Precio: 1200
+  SistemaOperativo: Windows 10
+  Procesador: Intel Core i7
+
+Tableta Grafica:
+  Serial: EDIS002
+  Marca: Wacom
+  Tamaño: 10.1
+  Precio: 250
+  Almacenamiento: 64 GB
+  Peso: 500

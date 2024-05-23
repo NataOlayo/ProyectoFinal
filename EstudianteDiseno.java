@@ -31,12 +31,19 @@ public class EstudianteDiseno {
         String nombre = jp.showInputDialog("Ingrese su nombre:\n");
         String apellido = jp.showInputDialog("Ingrese su apellido:\n");
         String telefono = jp.showInputDialog("Ingrese su teléfono:\n");
-        String modalidadEstudio = jp.showInputDialog("Ingrese el semestre que está cursando:\n");
-        int cantAsignaturas = Integer.parseInt(jp.showInputDialog("Ingrese el semestre que está cursando:\n"));
-        String serial = jp.showInputDialog("Ingrese el serial de su equipo. (En caso de no tener ingrese un cero(0))");
+        String modalidadEstudio = validacion.ValidarModalidad();
+        int cantAsignaturas = Integer
+                .parseInt(jp.showInputDialog("Ingrese la cantidad de asignaturas que está cursando:\n"));
+        String serial = jp.showInputDialog("Ingrese el serial de su equipo. (En caso de no tener ingrese un cero(0)):");
         EstudianteDiseno estudiante = new EstudianteDiseno(cedula, nombre, apellido, telefono, modalidadEstudio,
                 cantAsignaturas, serial);
-        lista.add(estudiante);
+        if (validacion.ValidarDatosEstudianteDiseño(estudiante)) {
+            lista.add(estudiante);
+        }
+    }
+
+    public static void recibirLista(LinkedList<EstudianteDiseno> listaa) {
+        lista = listaa;
     }
 
     public String getCedula() {

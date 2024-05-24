@@ -38,11 +38,14 @@ public class EstudianteDiseno {
                 cantAsignaturas, null);
         if (validacion.ValidarDatosEstudianteDiseño(estudiante)) {
             lista.add(estudiante);
+            jp.showMessageDialog(null, "¡Estudiante agregado exitosamente!");
         }
     }
 
     public static void recibirLista(LinkedList<EstudianteDiseno> listaa) {
-        lista = listaa;
+        for (EstudianteDiseno estudianteDiseno : listaa) {
+            lista.add(estudianteDiseno);
+        }
     }
 
     public String getCedula() {

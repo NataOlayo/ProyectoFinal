@@ -68,19 +68,23 @@ public class ComputadorPortatil {
         if (validacion.ValidarDatosComputadorPortatil(compu)) {
             listaCompu.add(compu);
             ArchivosInventario.CompusPrestados++;
-            int cent = 1;
+            int cent = 1, cent2 = 0;
             do {
                 String cedula = jp.showInputDialog("Ingrese la cédula del estudiante que va a realizar el prestamo:\n");
                 for (EstudianteIngenieria estudianteIngenieria : lista) {
-                    if (estudianteIngenieria.getCedula().equals(cedula)) {
+                    if (estudianteIngenieria.getCedula().equals(cedula)
+                            && estudianteIngenieria.getSerial() == null) {
                         estudianteIngenieria.setSerial(serial);
                         jp.showMessageDialog(null, "¡Prestamo exitoso!");
                         cent = 1;
+                        cent2 = cent;
                         break;
-                    } else {
-                        jp.showMessageDialog(null, "Estudiante no existente, por favor intente de nuevo.");
-                        cent = 0;
                     }
+                }
+                if (cent2 == 0) {
+                    jp.showMessageDialog(null,
+                            "Estudiante no existente o ya cuenta con un prestamo, por favor intente de nuevo.");
+                    cent = 0;
                 }
             } while (cent == 0);
         }
@@ -95,6 +99,7 @@ public class ComputadorPortatil {
                 if (estudianteIngenieria.getCedula().equals(buscar)
                         || estudianteIngenieria.getSerial().equals(buscar)) {
                     do {
+                        MostrarCompu(lista, buscar);
                         String menu = "Digite el número de la opción a elegir(el serial no puede ser modificado): "
                                 + "\n1. Modificar marca"
                                 + "\n2. Modificar tamaño"
@@ -106,7 +111,7 @@ public class ComputadorPortatil {
                         switch (opcion) {
                             case 1:
                                 String marca = jp.showInputDialog("Ingrese la modificación de la marca del equipo: ");
-                                if (validacion.NoContieneCaracteresEspeciales_Letras(marca)) {
+                                if (validacion.NoContieneCaracteresEspeciales_Digitos(marca)) {
                                     for (ComputadorPortatil computadorPortatil : listaCompu) {
                                         if (estudianteIngenieria.getSerial().equals(computadorPortatil.getSerial()))
                                             computadorPortatil.setMarca(marca);
@@ -117,7 +122,8 @@ public class ComputadorPortatil {
                                 }
                                 break;
                             case 2:
-                                String tamaño = jp.showInputDialog("Ingrese la modificación del tamaño del equipo: ");
+                                String tamaño = jp
+                                        .showInputDialog("Ingrese la modificación del tamaño del equipo(pulgadas): ");
                                 if (validacion.NoContieneCaracteresEspeciales_Letras(tamaño)) {
                                     for (ComputadorPortatil computadorPortatil : listaCompu) {
                                         if (estudianteIngenieria.getSerial().equals(computadorPortatil.getSerial()))
@@ -131,7 +137,8 @@ public class ComputadorPortatil {
                                 break;
 
                             case 3:
-                                String precio = jp.showInputDialog("Ingrese la modificación del precio del equipo:\n");
+                                String precio = jp
+                                        .showInputDialog("Ingrese la modificación del precio del equipo($):\n");
                                 if (validacion.NoContieneCaracteresEspeciales_Letras(precio)) {
                                     for (ComputadorPortatil computadorPortatil : listaCompu) {
                                         if (estudianteIngenieria.getSerial().equals(computadorPortatil.getSerial()))
@@ -268,8 +275,33 @@ public class ComputadorPortatil {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public static void MostrarCompu(LinkedList<EstudianteIngenieria> lista, String buscar) {
+        StringBuilder mensaje = new StringBuilder();
+        for (EstudianteIngenieria estudianteIngenieria : lista) {
+            if (estudianteIngenieria.getCedula().equals(buscar)
+                    || estudianteIngenieria.getSerial().equals(buscar)) {
+                for (ComputadorPortatil computadorPortatil : listaCompu) {
+                    if (estudianteIngenieria.getSerial().equals(computadorPortatil.getSerial())) {
+                        mensaje.append("Serial: ").append(computadorPortatil.getSerial()).append("\n");
+                        mensaje.append("Marca: ").append(computadorPortatil.getMarca()).append("\n");
+                        mensaje.append("Tamaño: ").append(computadorPortatil.getTamaño()).append("\n");
+                        mensaje.append("Precio: ").append(computadorPortatil.getPrecio()).append("\n");
+                        mensaje.append("Sistema operativo: ").append(computadorPortatil.getSistemaOperativo())
+                                .append("\n");
+                        mensaje.append("Procesador: ").append(computadorPortatil.getProcesador());
+                    }
+                }
+                break;
+            }
+        }
+        JOptionPane.showMessageDialog(null, mensaje.toString(), "Computador portatil: ",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public static void recibirLista(LinkedList<ComputadorPortatil> lista) {
-        listaCompu = lista;
+        for (ComputadorPortatil computadorPortatil : lista) {
+            lista.add(computadorPortatil);
+        }
     }
 
     public String getSerial() {

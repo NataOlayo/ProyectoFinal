@@ -34,9 +34,8 @@ public class EstudianteDiseno {
         String modalidadEstudio = validacion.ValidarModalidad();
         int cantAsignaturas = Integer
                 .parseInt(jp.showInputDialog("Ingrese la cantidad de asignaturas que está cursando:\n"));
-        String serial = jp.showInputDialog("Ingrese el serial de su equipo. (En caso de no tener ingrese un cero(0)):");
         EstudianteDiseno estudiante = new EstudianteDiseno(cedula, nombre, apellido, telefono, modalidadEstudio,
-                cantAsignaturas, serial);
+                cantAsignaturas, null);
         if (validacion.ValidarDatosEstudianteDiseño(estudiante)) {
             lista.add(estudiante);
         }

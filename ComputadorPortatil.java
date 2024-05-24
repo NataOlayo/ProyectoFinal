@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 
+import javax.sound.sampled.FloatControl;
 import javax.swing.JOptionPane;
 
 public class ComputadorPortatil {
@@ -27,8 +28,8 @@ public class ComputadorPortatil {
         String sistemOpera = "", procesador = "";
         String serial = jp.showInputDialog("Ingrese el serial del equipo:\n");
         String marca = jp.showInputDialog("Ingrese la marca:\n");
-        float tamaño = Float.parseFloat(jp.showInputDialog("Ingrese el tamaño:\n"));
-        float precio = Float.parseFloat(jp.showInputDialog("Ingrese el precio:\n"));
+        Float tamaño = validacion.ValidarTamaño();
+        Float precio = validacion.ValidarPrecio();
         String opciones = "Digite el número de la opción que corresponda al sistema operativo del computador:"
                 + "\n1. Windows 7"
                 + "\n2. Windows 10"
@@ -62,9 +63,11 @@ public class ComputadorPortatil {
                 Procesador = 0;
             }
         } while (Procesador == 0);
-        ComputadorPortatil compu = new ComputadorPortatil(serial, marca, tamaño, precio, sistemOpera, procesador);
+        ComputadorPortatil compu = new ComputadorPortatil(serial, marca, tamaño,
+                precio, sistemOpera, procesador);
         if (validacion.ValidarDatosComputadorPortatil(compu)) {
             listaCompu.add(compu);
+            ArchivosInventario.CompusPrestados++;
             int cent = 1;
             do {
                 String cedula = jp.showInputDialog("Ingrese la cédula del estudiante que va a realizar el prestamo:\n");
@@ -92,49 +95,54 @@ public class ComputadorPortatil {
                 if (estudianteIngenieria.getCedula().equals(buscar)
                         || estudianteIngenieria.getSerial().equals(buscar)) {
                     do {
-                        String menu = "Digite el número de la opción a elegir: "
-                                + "\n1. Modificar serial"
-                                + "\n2. Modificar marca"
-                                + "\n3. Modificar tamaño"
-                                + "\n4. Modificar precio"
-                                + "\n5. Modificar sistema operativo"
-                                + "\n6. Modificar procesador"
+                        String menu = "Digite el número de la opción a elegir(el serial no puede ser modificado): "
+                                + "\n1. Modificar marca"
+                                + "\n2. Modificar tamaño"
+                                + "\n3. Modificar precio"
+                                + "\n4. Modificar sistema operativo"
+                                + "\n5. Modificar procesador"
                                 + "\n0. Volver al menú anterior";
                         opcion = Integer.parseInt(jp.showInputDialog(menu));
                         switch (opcion) {
                             case 1:
-                                String serial = jp.showInputDialog("Ingrese la modificación del serial del equipo: ");
-                                estudianteIngenieria.setSerial(serial);
-                                jp.showMessageDialog(null, "¡Modificación exitosa!");
+                                String marca = jp.showInputDialog("Ingrese la modificación de la marca del equipo: ");
+                                if (validacion.NoContieneCaracteresEspeciales_Letras(marca)) {
+                                    for (ComputadorPortatil computadorPortatil : listaCompu) {
+                                        if (estudianteIngenieria.getSerial().equals(computadorPortatil.getSerial()))
+                                            computadorPortatil.setMarca(marca);
+                                    }
+                                    jp.showMessageDialog(null, "¡Modificación exitosa!");
+                                } else {
+                                    jp.showMessageDialog(null, "Solo debe contener letras");
+                                }
                                 break;
                             case 2:
-                                String marca = jp.showInputDialog("Ingrese la modificación de la marca del equipo: ");
-                                for (ComputadorPortatil computadorPortatil : listaCompu) {
-                                    if (estudianteIngenieria.getSerial().equals(computadorPortatil.getSerial()))
-                                        computadorPortatil.setMarca(marca);
-                                }
-                                jp.showMessageDialog(null, "¡Modificación exitosa!");
-                                break;
-                            case 3:
-                                float tamaño = Float.parseFloat(
-                                        jp.showInputDialog("Ingrese la modificación del tamaño del equipo: "));
-                                for (ComputadorPortatil computadorPortatil : listaCompu) {
-                                    if (estudianteIngenieria.getSerial().equals(computadorPortatil.getSerial()))
-                                        computadorPortatil.setTamaño(tamaño);
+                                String tamaño = jp.showInputDialog("Ingrese la modificación del tamaño del equipo: ");
+                                if (validacion.NoContieneCaracteresEspeciales_Letras(tamaño)) {
+                                    for (ComputadorPortatil computadorPortatil : listaCompu) {
+                                        if (estudianteIngenieria.getSerial().equals(computadorPortatil.getSerial()))
+                                            computadorPortatil.setTamaño(Float.parseFloat(tamaño));
 
+                                    }
+                                    jp.showMessageDialog(null, "¡Modificación exitosa!");
+                                } else {
+                                    jp.showMessageDialog(null, "Solo debe contener números");
                                 }
-                                jp.showMessageDialog(null, "¡Modificación exitosa!");
+                                break;
+
+                            case 3:
+                                String precio = jp.showInputDialog("Ingrese la modificación del precio del equipo:\n");
+                                if (validacion.NoContieneCaracteresEspeciales_Letras(precio)) {
+                                    for (ComputadorPortatil computadorPortatil : listaCompu) {
+                                        if (estudianteIngenieria.getSerial().equals(computadorPortatil.getSerial()))
+                                            computadorPortatil.setPrecio(Float.parseFloat(precio));
+                                    }
+                                    jp.showMessageDialog(null, "¡Modificación exitosa!");
+                                } else {
+                                    jp.showMessageDialog(null, "Solo debe contener números");
+                                }
                                 break;
                             case 4:
-                                float precio = Float.parseFloat(
-                                        jp.showInputDialog("Ingrese la modificación del precio del equipo:\n"));
-                                for (ComputadorPortatil computadorPortatil : listaCompu) {
-                                    if (estudianteIngenieria.getSerial().equals(computadorPortatil.getSerial()))
-                                        computadorPortatil.setPrecio(precio);
-                                }
-                                jp.showMessageDialog(null, "¡Modificación exitosa!");
-                                break;
-                            case 5:
                                 String sistemOpera = "";
                                 String opciones = "Digite el número de la opción que corresponda a la modificación del sistema operativo del computador:"
                                         + "\n1. Windows 7"
@@ -161,7 +169,7 @@ public class ComputadorPortatil {
                                 }
                                 jp.showMessageDialog(null, "¡Modificación exitosa!");
                                 break;
-                            case 6:
+                            case 5:
                                 opciones = "Digite el número de la opción que corresponda a la modificación del procesador del computador:"
                                         + "\n1. AMD Ryzen"
                                         + "\n2. Intel® Core™ i5";
@@ -214,12 +222,13 @@ public class ComputadorPortatil {
                         || estudianteIngenieria.getSerial().equals(buscar)) {
                     for (ComputadorPortatil computadorPortatil : listaCompu) {
                         if (computadorPortatil.getSerial().equals(estudianteIngenieria.getSerial())) {
-                            listaCompu.remove();
+                            listaCompu.remove(computadorPortatil);
+                            ArchivosInventario.CompusPrestados--;
                             cent = 1;
                             break;
                         }
                     }
-                    lista.remove(estudianteIngenieria);
+                    estudianteIngenieria.setSerial(null);
                     break;
                 }
             }

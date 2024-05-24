@@ -26,8 +26,8 @@ public class TabletaGrafica {
         String almacenamiento = "";
         String serial = jp.showInputDialog("Ingrese el serial del equipo: ");
         String marca = jp.showInputDialog("Ingrese la marca:");
-        float tamaño = Float.parseFloat(jp.showInputDialog("Ingrese el tamaño:"));
-        float precio = Float.parseFloat(jp.showInputDialog("Ingrese el precio: "));
+        Float tamaño = validacion.ValidarTamaño();
+        Float precio = validacion.ValidarPrecio();
         String opciones = "Digite el número de la opción que corresponda al almacenamiento de la tableta:"
                 + "\n1. 256 GB"
                 + "\n2. 512 GB"
@@ -46,9 +46,11 @@ public class TabletaGrafica {
             }
         } while (almace == 0);
         float peso = Float.parseFloat(jp.showInputDialog("Ingrese el peso:"));
-        TabletaGrafica Tableta = new TabletaGrafica(serial, marca, tamaño, precio, almacenamiento, peso);
+        TabletaGrafica Tableta = new TabletaGrafica(serial, marca, tamaño, precio,
+                almacenamiento, peso);
         if (validacion.ValidarDatosTabletaGrafica(Tableta)) {
             listaTablet.add(Tableta);
+            ArchivosInventario.TabletasPrestadas++;
             int cent = 1;
             do {
                 String cedula = jp.showInputDialog("Ingrese la cédula del estudiante que va a realizar el prestamo:\n");
@@ -77,51 +79,55 @@ public class TabletaGrafica {
                 if (estudianteDiseno.getCedula().equals(buscar)
                         || estudianteDiseno.getSerial().equals(buscar)) {
                     do {
-                        String menu = "Digite el número de la opción a elegir: "
-                                + "\n1. Modificar serial"
-                                + "\n2. Modificar marca"
-                                + "\n3. Modificar tamaño"
-                                + "\n4. Modificar precio"
-                                + "\n5. Modificar almacenamiento"
-                                + "\n6. Modificar peso"
+                        String menu = "Digite el número de la opción a elegir(Serial no puede ser modificado.): "
+                                + "\n1. Modificar marca"
+                                + "\n2. Modificar tamaño"
+                                + "\n3. Modificar precio"
+                                + "\n4. Modificar almacenamiento"
+                                + "\n5. Modificar peso"
                                 + "\n0. Volver al menú anterior";
                         opcion = Integer.parseInt(jp.showInputDialog(menu));
                         switch (opcion) {
                             case 1:
-                                String serial = jp
-                                        .showInputDialog("Ingrese la modificación del serial de la tableta: ");
-                                estudianteDiseno.setSerial(serial);
-                                jp.showMessageDialog(null, "¡Modificación exitosa!");
-                                break;
-                            case 2:
                                 String marca = jp
                                         .showInputDialog("Ingrese la modificación de la marca de la tableta: ");
-                                for (TabletaGrafica tabletaGrafica : listaTablet) {
-                                    if (estudianteDiseno.getSerial().equals(tabletaGrafica.getSerial()))
-                                        tabletaGrafica.setMarca(marca);
+                                if (validacion.NoContieneCaracteresEspeciales_Digitos(marca)) {
+                                    for (TabletaGrafica tabletaGrafica : listaTablet) {
+                                        if (estudianteDiseno.getSerial().equals(tabletaGrafica.getSerial()))
+                                            tabletaGrafica.setMarca(marca);
+                                    }
+                                    jp.showMessageDialog(null, "¡Modificación exitosa!");
+                                } else {
+                                    jp.showMessageDialog(null, "Solo debe contener letras");
                                 }
-                                jp.showMessageDialog(null, "¡Modificación exitosa!");
+                                break;
+                            case 2:
+                                String tamaño = jp
+                                        .showInputDialog("Ingrese la modificación del tamaño de la tableta: ");
+                                if (validacion.NoContieneCaracteresEspeciales_Letras(tamaño)) {
+                                    for (TabletaGrafica tabletaGrafica : listaTablet) {
+                                        if (estudianteDiseno.getSerial().equals(tabletaGrafica.getSerial()))
+                                            tabletaGrafica.setTamaño(Float.parseFloat(tamaño));
+                                    }
+                                    jp.showMessageDialog(null, "¡Modificación exitosa!");
+                                } else {
+                                    jp.showMessageDialog(null, "Solo debe contener números");
+                                }
                                 break;
                             case 3:
-                                float tamaño = Float.parseFloat(
-                                        jp.showInputDialog("Ingrese la modificación del tamaño de la tableta: "));
-                                for (TabletaGrafica tabletaGrafica : listaTablet) {
-                                    if (estudianteDiseno.getSerial().equals(tabletaGrafica.getSerial()))
-                                        tabletaGrafica.setTamaño(tamaño);
-
+                                String precio = jp
+                                        .showInputDialog("Ingrese la modificación del precio de la tableta:\n");
+                                if (validacion.NoContieneCaracteresEspeciales_Letras(precio)) {
+                                    for (TabletaGrafica tabletaGrafica : listaTablet) {
+                                        if (estudianteDiseno.getSerial().equals(tabletaGrafica.getSerial()))
+                                            tabletaGrafica.setPrecio(Float.parseFloat(precio));
+                                    }
+                                    jp.showMessageDialog(null, "¡Modificación exitosa!");
+                                } else {
+                                    jp.showMessageDialog(null, "Solo debe contener números");
                                 }
-                                jp.showMessageDialog(null, "¡Modificación exitosa!");
                                 break;
                             case 4:
-                                float precio = Float.parseFloat(
-                                        jp.showInputDialog("Ingrese la modificación del precio de la tableta:\n"));
-                                for (TabletaGrafica tabletaGrafica : listaTablet) {
-                                    if (estudianteDiseno.getSerial().equals(tabletaGrafica.getSerial()))
-                                        tabletaGrafica.setPrecio(precio);
-                                }
-                                jp.showMessageDialog(null, "¡Modificación exitosa!");
-                                break;
-                            case 5:
                                 int almace = 0;
                                 String almacenamiento = "";
                                 String opciones = "Digite el número de la opción que corresponda al almacenamiento de la tableta:"
@@ -148,15 +154,16 @@ public class TabletaGrafica {
                                 }
                                 jp.showMessageDialog(null, "¡Modificación exitosa!");
                                 break;
-                            case 6:
-                                float peso = Float.parseFloat(
-                                        jp.showInputDialog("Ingrese la modificación del peso de la tableta:"));
-                                for (TabletaGrafica tabletaGrafica : listaTablet) {
-                                    if (estudianteDiseno.getSerial().equals(tabletaGrafica.getSerial())) {
-                                        tabletaGrafica.setPeso(peso);
+                            case 5:
+                                String peso = jp.showInputDialog("Ingrese la modificación del peso de la tableta:");
+                                if (validacion.NoContieneCaracteresEspeciales_Letras(peso)) {
+                                    for (TabletaGrafica tabletaGrafica : listaTablet) {
+                                        if (estudianteDiseno.getSerial().equals(tabletaGrafica.getSerial())) {
+                                            tabletaGrafica.setPeso(Float.parseFloat(peso));
+                                        }
                                     }
+                                    jp.showMessageDialog(null, "¡Modificación exitosa!");
                                 }
-                                jp.showMessageDialog(null, "¡Modificación exitosa!");
                                 break;
                             case 0:
                                 jp.showMessageDialog(null, "Volviendo al menú anterior...");
@@ -187,12 +194,13 @@ public class TabletaGrafica {
                         || estudianteDiseno.getSerial().equals(buscar)) {
                     for (TabletaGrafica tabletaGrafica : listaTablet) {
                         if (tabletaGrafica.getSerial().equals(estudianteDiseno.getSerial())) {
-                            listaTablet.remove();
+                            listaTablet.remove(tabletaGrafica);
+                            ArchivosInventario.TabletasPrestadas--;
                             cent = 1;
                             break;
                         }
                     }
-                    lista.remove();
+                    estudianteDiseno.setSerial(null);
                     break;
                 }
             }

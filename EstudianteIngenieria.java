@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 
+import javax.print.FlavorException;
 import javax.swing.JOptionPane;
 
 public class EstudianteIngenieria {
@@ -30,15 +31,13 @@ public class EstudianteIngenieria {
         String nombre = jp.showInputDialog("Ingrese su nombre:\n");
         String apellido = jp.showInputDialog("Ingrese su apellido:\n");
         String telefono = jp.showInputDialog("Ingrese su teléfono:\n");
+        float promedio = validacion.ValidarPromedio();
         int semestre = validacion.ValidarNumeroSemestre();
-        float promedio = Float.parseFloat(jp.showInputDialog("Ingrese el promedio acumulado:\n"));
-        String serial = jp.showInputDialog("Ingrese el serial de su equipo. (En caso de no tener ingrese un cero(0))");
         EstudianteIngenieria estudiante = new EstudianteIngenieria(cedula, nombre, apellido, telefono, semestre,
-                promedio, serial);
+                promedio, null);
         if (validacion.ValidarDatosEstudianteIngeniera(estudiante)) {
             lista.add(estudiante);
         }
-
     }
 
     public static void recibirLista(LinkedList<EstudianteIngenieria> listaa) {

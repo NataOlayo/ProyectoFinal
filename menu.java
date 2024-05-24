@@ -7,8 +7,10 @@ public class menu {
     JOptionPane jp = new JOptionPane();
 
     public void ComportamientoPrograma() {
-        int CantidadCompus = Integer.parseInt(jp.showInputDialog("ingrese la cantidad de computadores disponibles: "));
-        int CantidadTabletas = Integer.parseInt(jp.showInputDialog("Ingrese la cantidad de tabletas disponibles: "));
+        ArchivosInventario.CantidadCompus = Integer
+                .parseInt(jp.showInputDialog("ingrese la cantidad de computadores disponibles: "));
+        ArchivosInventario.CantidadTabletas = Integer
+                .parseInt(jp.showInputDialog("Ingrese la cantidad de tabletas disponibles: "));
         int num = 0;
         do {
             String menu = "\n1. Ejecutar programa por consola"
@@ -21,7 +23,7 @@ public class menu {
                     menuEstudiantes(num);
                     break;
                 case 2:
-                    Archivos.LeerArchivo();
+                    ArchivosInventario.LeerArchivo();
                     menuEstudiantes(num);
                     break;
                 case 0:
@@ -39,10 +41,11 @@ public class menu {
 
         int num = 0;
         do {
-            String menu = "Elija el tipo de estudiante:\n"
+            String menu = "Elija una opción:\n"
                     + "\n1. Estudiante Ingeniera"
                     + "\n2. Estudiante Diseño"
                     + "\n3. Inventario total"
+                    + "\n4. Exportar archivo"
                     + "\n0. Finalizar el programa "
                     + "\n\nDigite la opción deseada:";
             num = Integer.parseInt(jp.showInputDialog(menu));
@@ -63,14 +66,17 @@ public class menu {
                     break;
                 case 3:
                     if (n == 1) {
-                        // ImprimirInventario();
+                        ArchivosInventario.ImprimirInventario();
                     } else {
-                        // ImprimirInventarioArchivo();
+                        ArchivosInventario.ImprimirInventarioArchivo();
                     }
+                    break;
+                case 4:
+                    ArchivosInventario.ExportarArchivo();
                     break;
                 case 0:
                     jp.showMessageDialog(null, "Hasta pronto.");
-
+                    System.exit(0);
                     break;
                 default:
                     jp.showMessageDialog(null, "Seleccionaste una opción incorrecta, por favor intenta de nuevo.");

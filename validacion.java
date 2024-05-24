@@ -4,6 +4,9 @@ public class validacion {
     static JOptionPane jp = new JOptionPane();
 
     public static boolean NoContieneCaracteresEspeciales(String cadena) {
+        if (cadena == null) {
+            return false;
+        }
         for (char c : cadena.toCharArray()) {
             if (!Character.isLetterOrDigit(c)) {
                 return false;
@@ -13,6 +16,9 @@ public class validacion {
     }
 
     public static boolean NoContieneCaracteresEspeciales_Digitos(String cadena) {
+        if (cadena == null) {
+            return false;
+        }
         for (char c : cadena.toCharArray()) {
             if (!Character.isLetter(c)) {
                 return false;
@@ -22,6 +28,9 @@ public class validacion {
     }
 
     public static boolean NoContieneCaracteresEspeciales_Letras(String cadena) {
+        if (cadena == null) {
+            return false;
+        }
         for (char c : cadena.toCharArray()) {
             if (!Character.isDigit(c)) {
                 return false;
@@ -30,15 +39,55 @@ public class validacion {
         return true;
     }
 
+    public static float ValidarTamaño() {
+        String tamaño = jp.showInputDialog("Ingrese el tamaño: ");
+        while (!NoContieneCaracteresEspeciales_Letras(tamaño)) {
+            jp.showMessageDialog(null, "Solo debe contener números");
+            tamaño = jp.showInputDialog("Ingrese el tamaño: ");
+        }
+        return Float.parseFloat(tamaño);
+    }
+
+    public static float ValidarPrecio() {
+        String precio = jp.showInputDialog("Ingrese el precio: ");
+        while (!NoContieneCaracteresEspeciales_Letras(precio)) {
+            jp.showMessageDialog(null, "Solo debe contener números");
+            precio = jp.showInputDialog("Ingrese el precio: ");
+        }
+        return Float.parseFloat(precio);
+    }
+
+    public static float ValidarPromedio() {
+        String promedio = jp.showInputDialog("Ingrese el promedio: ");
+        while (!NoContieneCaracteresEspeciales_Letras(promedio)) {
+            jp.showMessageDialog(null, "Solo debe contener números");
+            promedio = jp.showInputDialog("Ingrese el promedio: ");
+        }
+        return Float.parseFloat(promedio);
+    }
+
+    public static int ValidarAsignaturas() {
+        String cantAsignaturas = jp.showInputDialog("Ingrese la cantidad de asignaturas: ");
+        while (!NoContieneCaracteresEspeciales_Letras(cantAsignaturas)) {
+            jp.showMessageDialog(null, "Solo debe contener números");
+            cantAsignaturas = jp.showInputDialog("Ingrese la cantidad de asignaturas: ");
+        }
+        return Integer.parseInt(cantAsignaturas);
+    }
+
     public static int ValidarNumeroSemestre() {
-        int semestre = 0;
-        do {
-            semestre = Integer.parseInt(jp.showInputDialog("Ingrese el semestre que está cursando:\n"));
-            if (semestre >= 11) {
-                jp.showMessageDialog(null, "Semestre no válido, por favor intente de nuevo.");
-            }
-        } while (semestre >= 11);
-        return semestre;
+        String semestre = "";
+        if (NoContieneCaracteresEspeciales_Letras(semestre)) {
+            do {
+                semestre = jp.showInputDialog("Ingrese el semestre que está cursando:\n");
+                if (Integer.parseInt(semestre) >= 11) {
+                    jp.showMessageDialog(null, "Semestre no válido, por favor intente de nuevo.");
+                }
+            } while (Integer.parseInt(semestre) >= 11);
+        } else {
+            jp.showMessageDialog(null, "Solo debe contener números");
+        }
+        return Integer.parseInt(semestre);
     }
 
     public static String ValidarModalidad() {
@@ -61,7 +110,7 @@ public class validacion {
                     break;
             }
         } while (modalidadEstudio == 0);
-        return "";
+        return modalidad;
     }
 
     public static boolean ValidarDatosEstudianteIngeniera(EstudianteIngenieria estudiante) {
@@ -77,7 +126,7 @@ public class validacion {
                 valido = false;
             }
             if (estudianteIngenieria.getSerial().equals(estudiante.getSerial())
-                    && (estudianteIngenieria.getSerial() != "0")) {
+                    && (estudianteIngenieria.getSerial() != null)) {
                 jp.showMessageDialog(null, "Serial ya registrado");
                 valido = false;
             }
@@ -118,7 +167,7 @@ public class validacion {
                 valido = false;
             }
             if (estudianteDiseno.getSerial().equals(estudiante.getSerial())
-                    && (estudianteDiseno.getSerial() != "0")) {
+                    && (estudianteDiseno.getSerial() != null)) {
                 jp.showMessageDialog(null, "Serial ya registrado");
                 valido = false;
             }
@@ -155,7 +204,7 @@ public class validacion {
 
         for (ComputadorPortatil computadorPortatil : ComputadorPortatil.getListaCompu()) {
             if (computadorPortatil.getSerial().equals(computador.getSerial())
-                    && (computadorPortatil.getSerial() != "0")) {
+                    && (computadorPortatil.getSerial() != null)) {
                 jp.showMessageDialog(null, "Serial ya registrado");
                 valido = false;
             }
@@ -188,7 +237,7 @@ public class validacion {
 
         for (TabletaGrafica tabletaGrafica : TabletaGrafica.getListaTablet()) {
             if (tabletaGrafica.getSerial().equals(tableta.getSerial())
-                    && (tabletaGrafica.getSerial() != "0")) {
+                    && (tabletaGrafica.getSerial() != null)) {
                 jp.showMessageDialog(null, "Serial ya registrado");
                 valido = false;
             }

@@ -1,0 +1,8 @@
+Estudiante de Ingeniería: 
+Cédula: 1020106762
+Nombre: nata
+Apellido: ad
+Teléfono: 310
+Número Semestre: 4
+Promedio Acumulado: 5.0
+------------

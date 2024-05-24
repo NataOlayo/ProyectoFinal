@@ -56,7 +56,7 @@ public class ArchivosInventario {
         try {
             archivo = new FileWriter("EstudiantesExportados.txt");
             impresor = new PrintWriter(archivo);
-            for (EstudianteIngenieria estudianteIngenieria : EstudianteIngenieria.lista) {
+            for (EstudianteIngenieria estudianteIngenieria : EstudianteIngenieria.getLista()) {
                 impresor.println("Estudiante de Ingeniería: ");
                 impresor.println("Cédula: " + estudianteIngenieria.getCedula());
                 impresor.println("Nombre: " + estudianteIngenieria.getNombre());
@@ -64,10 +64,9 @@ public class ArchivosInventario {
                 impresor.println("Teléfono: " + estudianteIngenieria.getTelefono());
                 impresor.println("Número Semestre: " + estudianteIngenieria.getNumeroSemestre());
                 impresor.println("Promedio Acumulado: " + estudianteIngenieria.getPromedioAcumulado());
-                impresor.println("Serial: " + estudianteIngenieria.getSerial());
                 impresor.println("------------");
-                if (estudianteIngenieria.getSerial() != "0") {
-                    for (ComputadorPortatil computadorPortatil : ComputadorPortatil.listaCompu) {
+                if (estudianteIngenieria.getSerial() != null) {
+                    for (ComputadorPortatil computadorPortatil : ComputadorPortatil.getListaCompu()) {
                         if (computadorPortatil.getSerial().equals(estudianteIngenieria.getSerial())) {
                             impresor.println("Computador Portátil: ");
                             impresor.println("Serial: " + computadorPortatil.getSerial());
@@ -81,7 +80,7 @@ public class ArchivosInventario {
                     }
                 }
             }
-            for (EstudianteDiseno estudianteDiseno : EstudianteDiseno.lista) {
+            for (EstudianteDiseno estudianteDiseno : EstudianteDiseno.getLista()) {
                 impresor.println("Estudiante de Diseño: ");
                 impresor.println("Cédula: " + estudianteDiseno.getCedula());
                 impresor.println("Nombre: " + estudianteDiseno.getNombre());
@@ -89,10 +88,9 @@ public class ArchivosInventario {
                 impresor.println("Teléfono: " + estudianteDiseno.getTelefono());
                 impresor.println("Modalidad Estudio: " + estudianteDiseno.getModalidadEstudio());
                 impresor.println("Cantidad Asignaturas: " + estudianteDiseno.getCantAsignaturas());
-                impresor.println("Serial: " + estudianteDiseno.getSerial());
                 impresor.println("------------");
-                if (estudianteDiseno.getSerial() != "0") {
-                    for (TabletaGrafica tabletaGrafica : TabletaGrafica.listaTablet) {
+                if (estudianteDiseno.getSerial() != null) {
+                    for (TabletaGrafica tabletaGrafica : TabletaGrafica.getListaTablet()) {
                         if (tabletaGrafica.getSerial().equals(estudianteDiseno.getSerial())) {
                             impresor.println("Tableta Gráfica: ");
                             impresor.println("Serial: " + tabletaGrafica.getSerial());
@@ -156,6 +154,7 @@ public class ArchivosInventario {
                     ComputadorPortatil computadorPortatil = new ComputadorPortatil(serial, marca, tamaño, precio,
                             sistemaOperativo, procesador);
                     listaComp.add(computadorPortatil);
+                    CompusPrestados++;
                 }
                 if (line.equals("Tableta Grafica")) {
                     String serial = bufferedReader.readLine().split(": ")[1].trim();
@@ -167,6 +166,7 @@ public class ArchivosInventario {
                     TabletaGrafica tabletaGrafica = new TabletaGrafica(serial, marca, tamaño, precio, almacenamiento,
                             peso);
                     listaTab.add(tabletaGrafica);
+                    TabletasPrestadas++;
                 }
             }
             EstudianteIngenieria.recibirLista(listaIng);

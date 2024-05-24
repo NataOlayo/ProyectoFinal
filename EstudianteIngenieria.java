@@ -31,17 +31,20 @@ public class EstudianteIngenieria {
         String nombre = jp.showInputDialog("Ingrese su nombre:\n");
         String apellido = jp.showInputDialog("Ingrese su apellido:\n");
         String telefono = jp.showInputDialog("Ingrese su teléfono:\n");
-        float promedio = validacion.ValidarPromedio();
         int semestre = validacion.ValidarNumeroSemestre();
+        float promedio = validacion.ValidarPromedio();
         EstudianteIngenieria estudiante = new EstudianteIngenieria(cedula, nombre, apellido, telefono, semestre,
                 promedio, null);
         if (validacion.ValidarDatosEstudianteIngeniera(estudiante)) {
             lista.add(estudiante);
+            jp.showMessageDialog(null, "¡Estudiante agregado exitosamente!");
         }
     }
 
     public static void recibirLista(LinkedList<EstudianteIngenieria> listaa) {
-        lista = listaa;
+        for (EstudianteIngenieria estudianteIngenieria : listaa) {
+            lista.add(estudianteIngenieria);
+        }
     }
 
     public String getCedula() {

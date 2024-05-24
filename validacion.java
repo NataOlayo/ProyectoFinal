@@ -40,19 +40,19 @@ public class validacion {
     }
 
     public static float ValidarTamaño() {
-        String tamaño = jp.showInputDialog("Ingrese el tamaño: ");
+        String tamaño = jp.showInputDialog("Ingrese el tamaño(pulgadas): ");
         while (!NoContieneCaracteresEspeciales_Letras(tamaño)) {
             jp.showMessageDialog(null, "Solo debe contener números");
-            tamaño = jp.showInputDialog("Ingrese el tamaño: ");
+            tamaño = jp.showInputDialog("Ingrese el tamaño(pulgadas): ");
         }
         return Float.parseFloat(tamaño);
     }
 
     public static float ValidarPrecio() {
-        String precio = jp.showInputDialog("Ingrese el precio: ");
+        String precio = jp.showInputDialog("Ingrese el precio($): ");
         while (!NoContieneCaracteresEspeciales_Letras(precio)) {
             jp.showMessageDialog(null, "Solo debe contener números");
-            precio = jp.showInputDialog("Ingrese el precio: ");
+            precio = jp.showInputDialog("Ingrese el precio($): ");
         }
         return Float.parseFloat(precio);
     }
@@ -104,9 +104,10 @@ public class validacion {
                     break;
                 case 2:
                     modalidad = "Presencial";
+                    break;
                 default:
                     jp.showMessageDialog(null,
-                            "Almacenamiento no exitente, por favor intente de nuevo.");
+                            "Almacenamiento no existente, por favor intente de nuevo.");
                     break;
             }
         } while (modalidadEstudio == 0);
@@ -125,11 +126,6 @@ public class validacion {
                 jp.showMessageDialog(null, "Cédula ya registrada");
                 valido = false;
             }
-            if (estudianteIngenieria.getSerial().equals(estudiante.getSerial())
-                    && (estudianteIngenieria.getSerial() != null)) {
-                jp.showMessageDialog(null, "Serial ya registrado");
-                valido = false;
-            }
         }
 
         if (!NoContieneCaracteresEspeciales_Digitos(estudiante.getNombre())) {
@@ -147,10 +143,6 @@ public class validacion {
             valido = false;
         }
 
-        if (!NoContieneCaracteresEspeciales(estudiante.getSerial())) {
-            jp.showMessageDialog(null, "El serial solo debe contener dígitos");
-            valido = false;
-        }
         return valido;
     }
 
@@ -166,11 +158,6 @@ public class validacion {
                 jp.showMessageDialog(null, "Cédula ya registrada");
                 valido = false;
             }
-            if (estudianteDiseno.getSerial().equals(estudiante.getSerial())
-                    && (estudianteDiseno.getSerial() != null)) {
-                jp.showMessageDialog(null, "Serial ya registrado");
-                valido = false;
-            }
         }
 
         if (!NoContieneCaracteresEspeciales_Digitos(estudiante.getNombre())) {
@@ -185,11 +172,6 @@ public class validacion {
 
         if (!NoContieneCaracteresEspeciales_Letras(estudiante.getTelefono())) {
             jp.showMessageDialog(null, "El teléfono solo debe contener dígitos");
-            valido = false;
-        }
-
-        if (!NoContieneCaracteresEspeciales(estudiante.getSerial())) {
-            jp.showMessageDialog(null, "El serial solo debe contener dígitos");
             valido = false;
         }
         return valido;
@@ -215,16 +197,6 @@ public class validacion {
             valido = false;
         }
 
-        if (!NoContieneCaracteresEspeciales(computador.getSistemaOperativo())) {
-            jp.showMessageDialog(null, "El sistema operativo no debe contener caracteres especiales");
-            valido = false;
-        }
-
-        if (!NoContieneCaracteresEspeciales(computador.getProcesador())) {
-            jp.showMessageDialog(null, "El procesador no debe contener caracteres especiales");
-            valido = false;
-        }
-
         return valido;
     }
 
@@ -247,12 +219,6 @@ public class validacion {
             jp.showMessageDialog(null, "La marca solo debe contener letras");
             valido = false;
         }
-
-        if (!NoContieneCaracteresEspeciales(tableta.getAlmacenamiento())) {
-            jp.showMessageDialog(null, "El almacenamiento no debe contener caracteres especiales");
-            valido = false;
-        }
-
         return valido;
     }
 }

@@ -51,19 +51,22 @@ public class TabletaGrafica {
         if (validacion.ValidarDatosTabletaGrafica(Tableta)) {
             listaTablet.add(Tableta);
             ArchivosInventario.TabletasPrestadas++;
-            int cent = 1;
+            int cent = 1, cent2 = 0;
             do {
                 String cedula = jp.showInputDialog("Ingrese la cédula del estudiante que va a realizar el prestamo:\n");
                 for (EstudianteDiseno estudianteDiseno : lista) {
-                    if (estudianteDiseno.getCedula().equals(cedula)) {
+                    if (estudianteDiseno.getCedula().equals(cedula) && estudianteDiseno.getSerial() == null) {
                         estudianteDiseno.setSerial(serial);
                         jp.showMessageDialog(null, "¡Prestamo exitoso!");
                         cent = 1;
+                        cent2 = cent;
                         break;
-                    } else {
-                        jp.showMessageDialog(null, "Estudiante no existente, por favor intente de nuevo.");
-                        cent = 0;
                     }
+                }
+                if (cent2 == 0) {
+                    jp.showMessageDialog(null,
+                            "Estudiante no existente o ya cuenta con un prestamo, por favor intente de nuevo.");
+                    cent = 0;
                 }
             } while (cent == 0);
         }
@@ -79,6 +82,7 @@ public class TabletaGrafica {
                 if (estudianteDiseno.getCedula().equals(buscar)
                         || estudianteDiseno.getSerial().equals(buscar)) {
                     do {
+                        MostrarTablet(lista, buscar);
                         String menu = "Digite el número de la opción a elegir(Serial no puede ser modificado.): "
                                 + "\n1. Modificar marca"
                                 + "\n2. Modificar tamaño"
@@ -97,13 +101,15 @@ public class TabletaGrafica {
                                             tabletaGrafica.setMarca(marca);
                                     }
                                     jp.showMessageDialog(null, "¡Modificación exitosa!");
+                                    break;
                                 } else {
                                     jp.showMessageDialog(null, "Solo debe contener letras");
                                 }
                                 break;
                             case 2:
                                 String tamaño = jp
-                                        .showInputDialog("Ingrese la modificación del tamaño de la tableta: ");
+                                        .showInputDialog(
+                                                "Ingrese la modificación del tamaño de la tableta(pulgadas): ");
                                 if (validacion.NoContieneCaracteresEspeciales_Letras(tamaño)) {
                                     for (TabletaGrafica tabletaGrafica : listaTablet) {
                                         if (estudianteDiseno.getSerial().equals(tabletaGrafica.getSerial()))
@@ -116,7 +122,7 @@ public class TabletaGrafica {
                                 break;
                             case 3:
                                 String precio = jp
-                                        .showInputDialog("Ingrese la modificación del precio de la tableta:\n");
+                                        .showInputDialog("Ingrese la modificación del precio de la tableta($):\n");
                                 if (validacion.NoContieneCaracteresEspeciales_Letras(precio)) {
                                     for (TabletaGrafica tabletaGrafica : listaTablet) {
                                         if (estudianteDiseno.getSerial().equals(tabletaGrafica.getSerial()))
@@ -240,8 +246,33 @@ public class TabletaGrafica {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public static void MostrarTablet(LinkedList<EstudianteDiseno> lista, String buscar) {
+        StringBuilder mensaje = new StringBuilder();
+        for (EstudianteDiseno estudianteDiseno : lista) {
+            if (estudianteDiseno.getCedula().equals(buscar)
+                    || estudianteDiseno.getSerial().equals(buscar)) {
+                for (TabletaGrafica tabletaGrafica : listaTablet) {
+                    if (estudianteDiseno.getSerial().equals(tabletaGrafica.getSerial())) {
+                        mensaje.append("Serial: ").append(tabletaGrafica.getSerial()).append("\n");
+                        mensaje.append("Marca: ").append(tabletaGrafica.getMarca()).append("\n");
+                        mensaje.append("Tamaño: ").append(tabletaGrafica.getTamaño()).append("\n");
+                        mensaje.append("Precio: ").append(tabletaGrafica.getPrecio()).append("\n");
+                        mensaje.append("Almacenamiento: ").append(tabletaGrafica.getAlmacenamiento())
+                                .append("\n");
+                        mensaje.append("Peso: ").append(tabletaGrafica.getPeso());
+                    }
+                    break;
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, mensaje.toString(), "Computador portatil: ",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public static void recibirLista(LinkedList<TabletaGrafica> lista) {
-        listaTablet = lista;
+        for (TabletaGrafica tabletaGrafica : lista) {
+            lista.add(tabletaGrafica);
+        }
     }
 
     public String getSerial() {

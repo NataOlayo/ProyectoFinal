@@ -1,0 +1,6 @@
+Computadores totales: 20
+Computadores prestados: 1
+Computadores disponibles: 19
+Tabletas totales: 20
+Tabletas prestadas: 0
+Tabletas disponibles: 20

@@ -299,9 +299,7 @@ public class ComputadorPortatil {
     }
 
     public static void recibirLista(LinkedList<ComputadorPortatil> lista) {
-        for (ComputadorPortatil computadorPortatil : lista) {
-            lista.add(computadorPortatil);
-        }
+        listaCompu = lista;
     }
 
     public String getSerial() {

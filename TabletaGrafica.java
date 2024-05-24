@@ -270,9 +270,7 @@ public class TabletaGrafica {
     }
 
     public static void recibirLista(LinkedList<TabletaGrafica> lista) {
-        for (TabletaGrafica tabletaGrafica : lista) {
-            lista.add(tabletaGrafica);
-        }
+        listaTablet = lista;
     }
 
     public String getSerial() {

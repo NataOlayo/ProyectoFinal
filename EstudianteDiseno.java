@@ -43,9 +43,7 @@ public class EstudianteDiseno {
     }
 
     public static void recibirLista(LinkedList<EstudianteDiseno> listaa) {
-        for (EstudianteDiseno estudianteDiseno : listaa) {
-            lista.add(estudianteDiseno);
-        }
+        lista = listaa;
     }
 
     public String getCedula() {

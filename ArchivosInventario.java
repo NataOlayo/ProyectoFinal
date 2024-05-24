@@ -28,14 +28,25 @@ public class ArchivosInventario {
             archivo = new FileWriter("Inventario.txt");
             impresor = new PrintWriter(archivo);
             impresor.println("Computadores totales: " + CantidadCompus);
-            impresor.println("Comutadores prestados: " + CantidadTabletas);
+            impresor.println("Computadores prestados: " + CompusPrestados);
             impresor.println("Computadores disponibles: " + (CantidadCompus - CompusPrestados));
-            impresor.println("\nTabletas totales: " + CantidadCompus);
-            impresor.println("Tabletas prestadas: " + CantidadCompus);
+            impresor.println("Tabletas totales: " + CantidadTabletas);
+            impresor.println("Tabletas prestadas: " + TabletasPrestadas);
             impresor.println("Tabletas disponibles: " + (CantidadTabletas - TabletasPrestadas));
             jp.showMessageDialog(null, "El archivo se ha exportado correctamente en Inventario.txt");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (impresor != null) {
+                impresor.close();
+            }
+            if (archivo != null) {
+                try {
+                    archivo.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -108,6 +119,17 @@ public class ArchivosInventario {
                     "El archivo ha sido exportado correctamente, nombre del archivo: EstudiantesExportados.txt");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (impresor != null) {
+                impresor.close();
+            }
+            if (archivo != null) {
+                try {
+                    archivo.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
